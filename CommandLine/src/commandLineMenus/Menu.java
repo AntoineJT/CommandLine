@@ -335,7 +335,7 @@ public class Menu extends Option
 	public class ShortcutMissingException extends RuntimeException
 	{
 		private static final long serialVersionUID = -194430644006701341L;
-		private Option option;
+		private final Option option;
 		
 		public Option getOption()
 		{
@@ -392,7 +392,7 @@ public class Menu extends Option
 	{
 		private static final long serialVersionUID = -2884917321791851520L;
 
-		private List<Menu> cycleDetected;
+		private final List<Menu> cycleDetected;
 		
 		public CycleDetectedException(List<Menu> cycleDetected)
 		{
