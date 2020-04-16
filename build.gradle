@@ -1,0 +1,19 @@
+plugins {
+	id 'java'
+}
+
+group 'commandLineMenus'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'junit', name: 'junit', version: '4.13'
+}
+
+test {
+	useJUnit()
+}
