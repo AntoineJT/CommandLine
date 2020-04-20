@@ -10,6 +10,7 @@ import org.junit.Test;
 import commandLineMenus.Menu;
 import commandLineMenus.Menu.CycleDetectedException;
 import commandLineMenus.Menu.EmptyMenuException;
+import commandLineMenus.rendering.examples.MenuDefaultRenderer;
 import commandLineMenus.Option;
 
 public class TestMenus
@@ -216,7 +217,7 @@ public class TestMenus
 	}
 
 	@Test
-	public void checkEmptyMnu()
+	public void checkEmptyMenu()
 	{
 		Menu racine = new Menu("racine", "r");
 		try
@@ -228,5 +229,28 @@ public class TestMenus
 		{
 			assertEquals(e.getMenu(), racine);
 		}
+	}
+	
+	@Test
+	public void checkMenuBuilderPattern() {
+	    Option opt = new Option("Afficher coucou", "l", () -> System.out.println("Coucou"));
+	    Menu menu = new Menu("Test");
+	    menu.setRenderer(new MenuDefaultRenderer());
+	    menu.add(opt);
+	    menu.addQuit("q");
+	    menu.addQuit("Q", "Quitter plus fort");
+	    menu.addBack("b");
+	    menu.addBack("B", "Retour en arrière plus fort");
+	    menu.setAutoBack(true);
+	    Menu menu2 = new Menu("Test")
+                .add(opt)
+                .addQuit("q")
+                .addQuit("Q", "Quitter plus fort")
+                .addBack("b")
+                .addBack("B", "Retour en arrière encore plus fort")
+                .setAutoBack(true);
+	    menu2.setRenderer(new MenuDefaultRenderer());
+	    opt.setRenderer(new MenuDefaultRenderer());
+	    assertEquals(menu, menu2);
 	}
 }

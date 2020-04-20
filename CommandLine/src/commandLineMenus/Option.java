@@ -115,6 +115,9 @@ public class Option
 	
 	protected String stringOfOption()
 	{
+	    assert menuRenderer != null;
+	    assert getShortcut() != null;
+	    assert getTitle() != null;
 		return menuRenderer.option(getShortcut(), getTitle());
 	}
 

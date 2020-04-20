@@ -2,9 +2,8 @@ package commandLineMenus;
 
 
 import java.util.ArrayList;
-
-import java.util.Collections;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -87,9 +86,10 @@ public class Menu extends Option
 	 * @param option The option to add.
 	 */
 	
-	public void add(Option option)
+	public Menu add(Option option)
 	{
 		privateAdd(option);
+		return this;
 	}
 
 	/**
@@ -123,9 +123,10 @@ public class Menu extends Option
 	 * @param shortcut The shortcut that will appear in the menu.
 	 */
 	
-	public void addQuit(String shortcut)
+	public Menu addQuit(String shortcut)
 	{
 		add(new Option("Exit", shortcut, Action.QUIT));
+		return this;
 	}
 	
 	/**
@@ -134,9 +135,10 @@ public class Menu extends Option
 	 * @param shortcut The shortcut that will appear in the menu.
 	 */
 	
-	public void addQuit(String title, String shortcut)
+	public Menu addQuit(String title, String shortcut)
 	{
 		add(new Option(title, shortcut, Action.QUIT));
+		return this;
 	}
 	
 	/**
@@ -144,9 +146,10 @@ public class Menu extends Option
 	 * @param shortcut The shortcut that will appear in the menu.
 	 */
 	
-	public void addBack(String shortcut)
+	public Menu addBack(String shortcut)
 	{
 		addBack("Back", shortcut);
+		return this;
 	}
 	
 	/**
@@ -155,9 +158,10 @@ public class Menu extends Option
 	 * @param shortcut The shortcut that will appear in the menu.
 	 */
 	
-	public void addBack(String title, String shortcut)
+	public Menu addBack(String title, String shortcut)
 	{
 		privateAdd(new Option(title, shortcut, Action.BACK));
+		return this;
 	}
 	
 	/**
@@ -166,10 +170,11 @@ public class Menu extends Option
 	 * @param autoBack iff go back to the parent menu once the action is complete.
 	 */
 	
-	public void setAutoBack(boolean autoBack)
+	public Menu setAutoBack(boolean autoBack)
 	{
 		checkConcurrentModification("Impossible to change autoBack while running.");
 		this.autoBack = autoBack;
+		return this;
 	}
 	
 	protected String inputOption()
@@ -217,7 +222,6 @@ public class Menu extends Option
 			menuRenderer.outputString((menuRenderer.menusSeparator()));
 		else
 			betweenMenus = true;
-		
 	}
 	
 	protected Option getOption(String shortcut)
@@ -281,7 +285,9 @@ public class Menu extends Option
 	@Override
 	public String toString()
 	{
-		StringBuilder res = new StringBuilder(menuRenderer.header(getTitle()));
+		StringBuilder res = new StringBuilder(
+		        menuRenderer.header(
+		                getTitle()));
 		boolean between = false;
 		for (Option option : optionsList)
 		{
@@ -450,5 +456,17 @@ public class Menu extends Option
 	public static void goBack()
 	{
 		// TODO goBack method
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+	    if (!(o instanceof Menu))
+	        return false;
+	    Menu other = (Menu) o;
+	    // comparisons with equals are here to check if both are null and avoid NPE
+	    return (other.optionsMap == this.optionsMap || other.optionsMap.equals(this.optionsMap))
+	            && (other.optionsList == this.optionsList || other.optionsList.equals(this.optionsList))
+	            && other.autoBack == this.autoBack
+	            && (other.shortTitle == this.shortTitle || other.shortTitle.equals(this.shortTitle));
 	}
 }

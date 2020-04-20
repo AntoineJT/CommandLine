@@ -123,24 +123,26 @@ public class List<T> extends Menu
 	 */
 	
 	@Override
-	public void add(Option option)
+	public Menu add(Option option)
 	{
 		throw new ManualOptionAddForbiddenException(this, option);
 	}
 	
 	@Override
-	public void addQuit(String shortcut)
+	public Menu addQuit(String shortcut)
 	{
 		addQuit("Exit", shortcut);
+		return this;
 	}
 
 	@Override
-	public void addQuit(String title, String shortcut)
+	public Menu addQuit(String title, String shortcut)
 	{
 		if (isLocked())
 			throw new ConcurrentModificationException("Impossible to add \"quit\" option in list \"" 
 					+ getTitle() + "\" while running.");
 		this.optionQuit = new Option(title, shortcut, Action.QUIT);
+		return this;
 	}
 
 	/**
@@ -151,18 +153,20 @@ public class List<T> extends Menu
 	
 	
 	@Override
-	public void addBack(String shortcut)
+	public Menu addBack(String shortcut)
 	{
 		addBack("Back", shortcut);
+		return this;
 	}
 	
 	@Override
-	public void addBack(String title, String shortcut)
+	public Menu addBack(String title, String shortcut)
 	{
 		if (isLocked())
 			throw new ConcurrentModificationException("Impossible to add backoption in list " 
 					+ getTitle() + " while running.");
 		optionBack = new Option(title, shortcut, Action.BACK);
+		return this;
 	}
 
 	ListAction<T> getListAction()
